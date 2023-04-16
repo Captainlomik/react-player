@@ -20,7 +20,7 @@ export default function chillHop() {
       id: uuidv4(),
       active: false,
       color: ["#bfccae", "#c2d2d1"],
-      audio: "https://mp3.chillhop.com/serve.php/?mp3=48087",
+      audio: "https://mp3.chillhop.com/serve.php/?mp3=45233",
     },
     {
       name: "Cloud Zone",
@@ -30,7 +30,7 @@ export default function chillHop() {
       id: uuidv4(),
       active: false,
       color: ["#bfccae", "#c2d2d1"],
-      audio: "https://mp3.chillhop.com/serve.php/?mp3=48087",
+      audio: "https://mp3.chillhop.com/serve.php/?mp3=45231",
     },
     {
       name: "Oh Let's Ride",
@@ -40,7 +40,7 @@ export default function chillHop() {
       id: uuidv4(),
       active: false,
       color: ["#bfccae", "#c2d2d1"],
-      audio: "https://mp3.chillhop.com/serve.php/?mp3=48087",
+      audio: "https://mp3.chillhop.com/serve.php/?mp3=45229",
     },
   ];
 }
