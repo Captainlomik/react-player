@@ -62,11 +62,18 @@ export default function Player({
 
   const skipTrackHandler = (direction: string) => {
     let currentIndex = songs.findIndex((song) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      song.id === currentSong.id;
+      return song.id === currentSong.id;
     });
     if (direction === "skip-forward") {
-      setCurrentSong(songs[currentIndex + 1]);
+      setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+    }
+    if (direction === "skip-back") {
+      if ((currentIndex - 1) % songs.length === -1) { 
+        setCurrentSong(songs.at(-1))
+        return
+      }
+        setCurrentSong(songs[(currentIndex - 1) % songs.length]);
+        
     }
   };
 
