@@ -7,6 +7,7 @@ import {
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
 import { SongModel } from "../models";
+import { playAudio } from "../util";
 
 interface timeProps {
   currentTime: number;
@@ -72,10 +73,12 @@ export default function Player({
     if (direction === "skip-back") {
       if ((currentIndex - 1) % songs.length === -1) {
         setCurrentSong(songs.at(-1));
+        playAudio(isPlaying, audioRef)
         return;
       }
       setCurrentSong(songs[(currentIndex - 1) % songs.length]);
     }
+    playAudio(isPlaying, audioRef)
   };
 
   useEffect(() => {
