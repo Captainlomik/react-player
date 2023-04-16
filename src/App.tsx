@@ -6,6 +6,12 @@ import data from "./data";
 import Library from "./components/Library";
 import Nav from "./components/Nav";
 
+export interface timeProps {
+  currentTime: number;
+  duration: number;
+  animationPercentage: number;
+}
+
 function App() {
   const [songs, setSongs] = useState(data());
   const [currentSong, setCurrentSong] = useState(songs[0]);
@@ -14,25 +20,32 @@ function App() {
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  interface timeProps {
-    currentTime: number;
-    duration: number;
-  }
-
   const [songInfo, setSongInfo] = useState<timeProps>({
     currentTime: 0,
     duration: 0,
+    animationPercentage: 0,
   });
 
   const timeUpdateHandler = (e: React.ChangeEvent<HTMLAudioElement>) => {
     const current = e.target.currentTime;
     const duration = e.target.duration;
-    setSongInfo({ ...songInfo, currentTime: current, duration });
+    //вычисление длины трека
+    const roundedCurrent = Math.round(current);
+    const roundedDuration = Math.round(duration);
+    const animation = Math.round((roundedCurrent / roundedDuration) * 100);
+    
+
+    setSongInfo({
+      ...songInfo,
+      currentTime: current,
+      duration,
+      animationPercentage: animation,
+    });
   };
 
   return (
     <div className="App">
-      <Nav libraryStatus={libraryStatus} setLibraryStatus = {setLibraryStatus} />
+      <Nav libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />
       <Song currentSong={currentSong} />
       <Player
         currentSong={currentSong}
@@ -44,7 +57,6 @@ function App() {
         songInfo={songInfo}
         songs={songs}
         setSongs={setSongs}
-        
       />
       <Library
         songs={songs}
