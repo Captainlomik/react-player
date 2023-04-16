@@ -35,13 +35,13 @@ input[type="range"]:focus {
   outline: none;
 }
 
-input[type="range" i]::-webkit-slider-thumb{
+input[type="range" i]::-webkit-slider-thumb {
   -webkit-appearance: none;
   height: 16px;
   width: 16px;
 }
 
-.track{
+.track {
   background: lightblue;
   width: 100%;
   height: 1rem;
@@ -50,7 +50,7 @@ input[type="range" i]::-webkit-slider-thumb{
   overflow: hidden;
 }
 
-.animate-track{
+.animate-track {
   background: rgb(204, 204, 204);
   width: 100%;
   height: 100%;
@@ -59,4 +59,13 @@ input[type="range" i]::-webkit-slider-thumb{
   left: 0;
   transform: translateX(0%);
   pointer-events: none;
+}
+
+@media screen and (max-width:768px){
+  .time-control {
+    width: 90%;
+  }
+  .play-control{
+    width: 60%;
+  }
 }
