@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -22,6 +22,7 @@ interface songProps {
   songInfo: timeProps;
   setSongInfo: (info: timeProps) => void;
   songs: SongModel[];
+  setSongs: (song:any) => void
 }
 
 export default function Player({
@@ -33,6 +34,7 @@ export default function Player({
   songInfo,
   setSongInfo,
   songs,
+  setSongs,
 }: songProps) {
   const playSongHandler = () => {
     if (isPlaying) {
@@ -68,14 +70,30 @@ export default function Player({
       setCurrentSong(songs[(currentIndex + 1) % songs.length]);
     }
     if (direction === "skip-back") {
-      if ((currentIndex - 1) % songs.length === -1) { 
-        setCurrentSong(songs.at(-1))
-        return
+      if ((currentIndex - 1) % songs.length === -1) {
+        setCurrentSong(songs.at(-1));
+        return;
       }
-        setCurrentSong(songs[(currentIndex - 1) % songs.length]);
-        
+      setCurrentSong(songs[(currentIndex - 1) % songs.length]);
     }
   };
+
+  useEffect(() => {
+    const newSongs = songs.map((song) => {
+      if (song.id === currentSong.id) {
+        return {
+          ...song,
+          active: true,
+        };
+      } else {
+        return {
+          ...song,
+          active: false,
+        };
+      }
+    });
+    setSongs(newSongs);
+  }, [currentSong]);
 
   return (
     <div className="player">
