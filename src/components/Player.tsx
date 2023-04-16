@@ -7,7 +7,6 @@ import {
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
 import { SongModel } from "../models";
-import { playAudio } from "../util";
 import { timeProps } from "../App";
 
 interface songProps {
@@ -59,22 +58,22 @@ export default function Player({
     setSongInfo({ ...songInfo, currentTime: +e.target.value });
   };
 
-  const skipTrackHandler = (direction: string) => {
+  const skipTrackHandler = async (direction: string) => {
     let currentIndex = songs.findIndex((song) => {
       return song.id === currentSong.id;
     });
     if (direction === "skip-forward") {
-      setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+      await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
     }
     if (direction === "skip-back") {
       if ((currentIndex - 1) % songs.length === -1) {
-        setCurrentSong(songs.at(-1));
-        playAudio(isPlaying, audioRef);
+        await setCurrentSong(songs.at(-1));
+        if (isPlaying) audioRef.current.play();
         return;
       }
-      setCurrentSong(songs[(currentIndex - 1) % songs.length]);
+      await setCurrentSong(songs[(currentIndex - 1) % songs.length]);
     }
-    playAudio(isPlaying, audioRef);
+    if (isPlaying) audioRef.current.play();
   };
 
   useEffect(() => {
@@ -96,7 +95,7 @@ export default function Player({
 
   //Добавление стилей
   let trackAnim = {
-    transform: `translateX(${songInfo.animationPercentage}%)`
+    transform: `translateX(${songInfo.animationPercentage}%)`,
   };
 
   return (

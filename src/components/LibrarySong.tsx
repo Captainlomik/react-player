@@ -1,6 +1,5 @@
 import React from "react";
 import { SongModel } from "../models";
-import { playAudio } from "../util";
 
 interface songProps {
   id: number;
@@ -21,8 +20,8 @@ export default function LibrarySong({
   isPlaying,
   setSongs,
 }: songProps) {
-  const songSelectHandler = () => {
-    setCurrentSong(song);
+  const songSelectHandler = async () => {
+   await setCurrentSong(song);
 
     //Активная песня
     const newSongs = songs.map((song) => {
@@ -38,9 +37,9 @@ export default function LibrarySong({
         };
       }
     });
-    setSongs(newSongs);
+ setSongs(newSongs);
     //Проверить играет ли музыка
-    playAudio(isPlaying, audioRef)
+    if(isPlaying) audioRef.current.play()
   };
 
   return (
